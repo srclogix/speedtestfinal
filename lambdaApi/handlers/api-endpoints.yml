@@ -1,0 +1,102 @@
+  test-route:
+    handler: modules/twillio/endpoints/calls.twillio_serve_js_file
+    memorySize: 128
+    timeout: 30
+    events:
+      - http: 
+          path: /
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - access-control-allow-headers
+              - Access-Control-Allow-Origin
+            allowCredentials: false
+  
+  empty-get-route:
+    handler: index.empty_post
+    memorySize: 128
+    timeout: 30
+        events: 
+      - http: 
+          path: /empty
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - access-control-allow-headers
+              - Access-Control-Allow-Origin
+            allowCredentials: false
+
+  empty-post-route:
+    handler: index.empty_post
+    memorySize: 128
+    timeout: 30
+        events: 
+      - http: 
+          path: /empty
+          method: post
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - access-control-allow-headers
+              - Access-Control-Allow-Origin
+            allowCredentials: false
+
+  garbage-get-route:
+    handler: index.garbage_get
+    memorySize: 128
+    timeout: 30
+      - http: 
+          path: /garbage
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - access-control-allow-headers
+              - Access-Control-Allow-Origin
+            allowCredentials: false
+
+  ip-get-route:
+    handler: index.ip_get
+    memorySize: 128
+    timeout: 30
+      - http: 
+          path: /getIP
+          method: GET
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - access-control-allow-headers
+              - Access-Control-Allow-Origin
+            allowCredentials: false

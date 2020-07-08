@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Speed Test Application" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <style>
+        div#startStopBtn {
+            display: none
+        }
+    </style>
+    <script type="text/javascript" src="speedtest.js"></script>
+    <script type="text/javascript">
+        function I(i){return document.getElementById(i);}
+       //INITIALIZE SPEEDTEST
+       var s=new Speedtest(); //create speedtest object
+     
+       
+       function mbpsToAmount(s){
+         return 1-(1/(Math.pow(1.3,Math.sqrt(s))));
+       }
+       function format(d){
+           d=Number(d);
+           if(d<10) return d.toFixed(2);
+           if(d<100) return d.toFixed(1);
+           return d.toFixed(0);
+       }
+       
+       //UI CODE
+       var uiData=null;
+       function startStop(){
+           if(s.getState()==3){
+           //speedtest is running, abort
+           s.abort();
+           data=null;
+           I("startStopBtn").className="";
+           initUI();
+         }else{
+           //test is not running, begin
+           I("startStopBtn").className="c-refrash-icon-new";
+           s.onupdate=function(data){
+                   uiData=data;
+           };
+           s.onend=function(aborted){
+                   I("startStopBtn").className="c-refrash-icon-new";
+                   updateUI(true);
+           };
+           s.start();
+         }
+       }
+       //this function reads the data sent back by the test and updates the UI
+       function updateUI(forced){
+         if(!forced&&s.getState()!=3) return;
+         if(uiData==null) return;
+         var status=uiData.testState;
+         //var ipp=uiData.clientIp;
+         
+          I("ip").textContent=uiData.clientIp;
+         // I("server").textContent=uiData.clientIp;
+          
+       //I("locat").textContent=uiData.clientIp;
+         I("dlText").textContent=(status==1&&uiData.dlStatus==0)?"...":format(uiData.dlStatus);
+         //drawMeter(I("dlMeter"),mbpsToAmount(Number(uiData.dlStatus*(status==1?oscillate():1))),meterBk,dlColor,Number(uiData.dlProgress),progColor);
+         I("ulText").textContent=(status==3&&uiData.ulStatus==0)?"...":format(uiData.ulStatus);
+         //drawMeter(I("ulMeter"),mbpsToAmount(Number(uiData.ulStatus*(status==3?oscillate():1))),meterBk,ulColor,Number(uiData.ulProgress),progColor);
+         I("pingText").textContent=format(uiData.pingStatus);
+         I("jitText").textContent=format(uiData.jitterStatus);
+         //var prog=(Number(uiData.dlProgress)*2+Number(uiData.ulProgress)*2+Number(uiData.pingProgress))/5;
+         //document.getElementById("myBt").style.height=(100*prog)+"%";
+       }
+       function oscillate(){
+         return 1+0.02*Math.sin(Date.now()/100);
+       }
+       //update the UI every frame
+       window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||(function(callback,element){setTimeout(callback,1000/60);});
+       function frame(){
+         requestAnimationFrame(frame);
+         updateUI();
+       }
+       frame(); //start frame loop
+       //function to (re)initialize UI
+       function initUI(){
+         //drawMeter(I("dlMeter"),0,meterBk,dlColor,0);
+         //drawMeter(I("ulMeter"),0,meterBk,ulColor,0);
+         I("dlText").textContent="";
+         I("ulText").textContent="";
+         I("pingText").textContent="";
+         I("jitText").textContent="";
+         I("ip").textContent="";
+       }
+     </script>
+    <title>Speedtest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" />
+    <link href="/static/css/main.0d0ec278.chunk.css" rel="stylesheet">
+</head>
+
+<body><noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="startStopBtn" onclick="startStop()"></div>
+    <div id="root"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready((function() {
+            $(".c-refrash-icon-new").click((function() {
+                1 == $(this).hasClass("active") ? ($(this).addClass("active-push"), $(this).removeClass("active")) : $(this).toggleClass("active")
+            })), $(".c-setting-wr a").click((function() {
+                $("body").addClass("modal-open"), setTimeout((function() {
+                    $(".c-setting-modal").addClass("show")
+                }), 100)
+            })), $(".c-setting-modal ").click((function() {
+                $("body").removeClass("modal-open"), $(".c-setting-modal").removeClass("show")
+            })), $(".c-setting-modal .modal-content").click((function() {
+                event.stopPropagation()
+            })), $(".c-setting-modal .close").click((function() {
+                $("body").removeClass("modal-open"), $(".c-setting-modal").removeClass("show")
+            }))
+        }))
+    </script>
+    <script type="text/javascript">
+        $(".toggleButton:eq(1)").on("click", (function() {
+            if ("Play" === $(this).html()) $(this).html("Pause"), $boxTwo.addClass("horizTranslate");
+            else {
+                $(this).html("Play");
+                var o = $boxTwo.css("margin-left");
+                $boxTwo.removeClass("horizTranslate"), $boxTwo.css("margin-left", o)
+            }
+        }))
+    </script>
+    <script>
+        ! function(e) {
+            function t(t) {
+                for (var n, l, a = t[0], p = t[1], f = t[2], c = 0, s = []; c < a.length; c++) l = a[c], Object.prototype.hasOwnProperty.call(o, l) && o[l] && s.push(o[l][0]), o[l] = 0;
+                for (n in p) Object.prototype.hasOwnProperty.call(p, n) && (e[n] = p[n]);
+                for (i && i(t); s.length;) s.shift()();
+                return u.push.apply(u, f || []), r()
+            }
+
+            function r() {
+                for (var e, t = 0; t < u.length; t++) {
+                    for (var r = u[t], n = !0, a = 1; a < r.length; a++) {
+                        var p = r[a];
+                        0 !== o[p] && (n = !1)
+                    }
+                    n && (u.splice(t--, 1), e = l(l.s = r[0]))
+                }
+                return e
+            }
+            var n = {},
+                o = {
+                    1: 0
+                },
+                u = [];
+
+            function l(t) {
+                if (n[t]) return n[t].exports;
+                var r = n[t] = {
+                    i: t,
+                    l: !1,
+                    exports: {}
+                };
+                return e[t].call(r.exports, r, r.exports, l), r.l = !0, r.exports
+            }
+            l.m = e, l.c = n, l.d = function(e, t, r) {
+                l.o(e, t) || Object.defineProperty(e, t, {
+                    enumerable: !0,
+                    get: r
+                })
+            }, l.r = function(e) {
+                "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
+                    value: "Module"
+                }), Object.defineProperty(e, "__esModule", {
+                    value: !0
+                })
+            }, l.t = function(e, t) {
+                if (1 & t && (e = l(e)), 8 & t) return e;
+                if (4 & t && "object" == typeof e && e && e.__esModule) return e;
+                var r = Object.create(null);
+                if (l.r(r), Object.defineProperty(r, "default", {
+                        enumerable: !0,
+                        value: e
+                    }), 2 & t && "string" != typeof e)
+                    for (var n in e) l.d(r, n, function(t) {
+                        return e[t]
+                    }.bind(null, n));
+                return r
+            }, l.n = function(e) {
+                var t = e && e.__esModule ? function() {
+                    return e.default
+                } : function() {
+                    return e
+                };
+                return l.d(t, "a", t), t
+            }, l.o = function(e, t) {
+                return Object.prototype.hasOwnProperty.call(e, t)
+            }, l.p = "/";
+            var a = this["webpackJsonpspeedtest-react"] = this["webpackJsonpspeedtest-react"] || [],
+                p = a.push.bind(a);
+            a.push = t, a = a.slice();
+            for (var f = 0; f < a.length; f++) t(a[f]);
+            var i = p;
+            r()
+        }([])
+    </script>
+    <script src="/static/js/2.10abbc62.chunk.js"></script>
+    <script src="/static/js/main.21b5f78d.chunk.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+@media only screen and (max-width: 2000px) {
+	.c-banner-img picture, .c-banner-img-after picture {
+		width: 22%;
+	}
+}
+@media only screen and (max-width: 1600px) {
+	.c-main-wr {
+		position: static;
+		-webkit-transform: translate(0);
+		-webkit-transform: translate(0);
+		-webkit-transform: translate(0);
+		margin: 0 auto;
+	}
+	.c-banner-img picture, .c-banner-img-after picture {
+		width: 18%;
+	}
+	.c-main-wr {
+		margin-bottom: 20px;
+	}
+}
+@media only screen and (max-width: 1199px) {
+	h3 {
+		font-size: 26px;
+	}
+	.c-main-wr {
+		width: 900px;
+	}
+	h1 {
+		font-size: 52px;
+	}
+	.c-speed-main h1 span {
+		font-size: 134px;
+		line-height: 98px;
+	}
+}
+@media only screen and (max-width: 991px) {
+	.c-speedtest-main {
+		padding: 0;
+	}
+	.c-internet-main, .c-latency-main {
+		max-width: 100%;
+		flex: 0 0 100%;
+	}
+	.c-internet-main {
+		padding: 0;
+		padding-bottom: 20px;
+	}
+	.c-main-wr {
+		width: 600px;
+	}
+	.c-download-box {
+		padding: 15px;
+	}
+	.c-setting-wr span {
+		width: 160px;
+	}
+	.c-main-box1 {
+		padding: 25px;
+	}
+	.c-main-box1, .c-main-box2 {
+		max-width: 100%;
+		flex: 0 0 100%;
+	}
+	.c-main-box-img picture {
+		position: static;
+	}
+	.c-main-box1 {
+		-webkit-box-ordinal-group: 2;
+		-ms-flex-order: 1;
+		order: 1;
+	}
+	.c-main-box2 {
+		-webkit-box-ordinal-group: 3;
+		-ms-flex-order: 2;
+		order: 2;
+		display: none;
+	}
+	.c-speed-main h1 dfn {
+		margin: 0;
+	}
+	.c-setting-wr a{    
+	position: relative;
+	top: 0px;
+    right: -13px;
+}
+.c-header-wr { padding-top: 6px; }
+
+}
+@media only screen and (max-width: 767px) {
+	.c-main-wr {
+		width: 100%;
+		margin: 0;
+		margin-top: 20px;
+		padding: 0 15px;
+		margin-bottom: 50px;
+	}
+	.c-speed-main h1 span {
+		font-size: 154px;
+		line-height: 119px;
+		text-align: center;
+		display: block;
+	}
+	h1 {
+		font-size: 90px;
+	}
+	.c-speed-box {
+		padding: 15px;
+	}
+	h4 {
+		font-size: 21px;
+	}
+	.c-speed-box h4 {
+		margin-bottom: 30px;
+	}
+	.c-speed-box ul {
+		padding: 0;
+	}
+	.c-speed-box h3 {
+		font-size: 24px;
+	}
+	.c-setting-wr svg {
+		width: 40px;
+	}
+	.c-setting-wr span {
+		width: 140px;
+	}
+	.c-masage-wr h3 {
+		font-size: 24px;
+		line-height: 28px;
+	}
+	.c-speed-box:hover, .c-download-box:hover {
+		transform: scale(1);
+	}
+	.c-download-box ul li h4 {
+		padding-left: 30px;
+		font-size: 19px;
+		padding-top: 3px;
+	}
+	.c-download-box ul li span svg {
+		width: 22px;
+	}
+	.c-download-box ul li {
+		min-height: inherit;
+	}
+	.c-speed-main h1 {
+		display: block;
+	}
+	.c-speed-box ul li {
+		padding: 0 8px;
+	}
+	.c-speed-box h3 {
+		font-size: 14px;
+	}
+	.c-main-box1 {
+		padding: 15px;
+	}
+	.c-speed-main h1 dfn {
+		margin: 0;
+		display: block;
+		font-size: 80px;
+		text-align: center;
+		line-height: 70px;
+	}
+	.c-info-box:hover, .c-speed-headeing:hover {
+		transform: scale(1);
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	}
+	.c-speed-main h3 {
+		font-size: 22px;
+		margin: 0;
+		margin-top: 3px;
+	}
+	.c-refrash-icon svg {
+		width: 35px;
+	}
+	.c-refrash-icon:after, .c-refrash-icon:before { left: 12px; top: 12px; height: 12px; }
+	.c-refrash-icon:after { left: 19px; }
+	.c-speed-main .c-refrash-icon-new {bottom: -15px;}
+	.c-speed-headeing { margin-top: 20px; }
+	.c-speed-main h3 { margin-top: 10px; }
+
+}
+@media (min-width: 320px) and (max-width: 680px) {
+	.modal-dialog {
+		margin: 0.9rem;
+	}
+}

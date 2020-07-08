@@ -1,0 +1,28 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "start-local": "serverless offline start"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "gps-distance": "^0.0.4",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "^1.9.1",
+    "random-bytes": "^1.0.0",
+    "request": "^2.85.0",
+    "serverless-http": "^2.5.0",
+    "serverless-offline": "^6.4.0"
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Speed Test Application" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <style>
+      div#startStopBtn {
+    display: none;
+}
+    </style>
+    <script type="text/javascript" src="speedtest.js"></script>
+<script type="text/javascript">
+       function I(i){return document.getElementById(i);}
+      //INITIALIZE SPEEDTEST
+      var s=new Speedtest(); //create speedtest object
+    
+      
+      function mbpsToAmount(s){
+        return 1-(1/(Math.pow(1.3,Math.sqrt(s))));
+      }
+      function format(d){
+          d=Number(d);
+          if(d<10) return d.toFixed(2);
+          if(d<100) return d.toFixed(1);
+          return d.toFixed(0);
+      }
+      
+      //UI CODE
+      var uiData=null;
+      function startStop(){
+          if(s.getState()==3){
+          //speedtest is running, abort
+          s.abort();
+          data=null;
+          I("startStopBtn").className="";
+          initUI();
+        }else{
+          //test is not running, begin
+          I("startStopBtn").className="c-refrash-icon-new";
+          s.onupdate=function(data){
+                  uiData=data;
+          };
+          s.onend=function(aborted){
+                  I("startStopBtn").className="c-refrash-icon-new";
+                  updateUI(true);
+          };
+          s.start();
+        }
+      }
+      //this function reads the data sent back by the test and updates the UI
+      function updateUI(forced){
+        if(!forced&&s.getState()!=3) return;
+        if(uiData==null) return;
+        var status=uiData.testState;
+        var ipp=uiData.clientIp;
+        
+        var newip=ipp.toString().split("-")[0];
+         I("ip").textContent=newip;
+      var mySubString = ipp.substring(
+         ipp.lastIndexOf("-") + 1, 
+         ipp.lastIndexOf(",")
+      );
+         I("server").textContent=mySubString;
+         
+         var srtt = ipp.substring(
+         ipp.lastIndexOf(",") + 1, 
+         ipp.lastIndexOf("(")
+      );
+      I("locat").textContent=srtt;
+        I("dlText").textContent=(status==1&&uiData.dlStatus==0)?"...":format(uiData.dlStatus);
+        //drawMeter(I("dlMeter"),mbpsToAmount(Number(uiData.dlStatus*(status==1?oscillate():1))),meterBk,dlColor,Number(uiData.dlProgress),progColor);
+        I("ulText").textContent=(status==3&&uiData.ulStatus==0)?"...":format(uiData.ulStatus);
+        //drawMeter(I("ulMeter"),mbpsToAmount(Number(uiData.ulStatus*(status==3?oscillate():1))),meterBk,ulColor,Number(uiData.ulProgress),progColor);
+        I("pingText").textContent=format(uiData.pingStatus);
+        I("jitText").textContent=format(uiData.jitterStatus);
+        //var prog=(Number(uiData.dlProgress)*2+Number(uiData.ulProgress)*2+Number(uiData.pingProgress))/5;
+        //document.getElementById("myBt").style.height=(100*prog)+"%";
+      }
+      function oscillate(){
+        return 1+0.02*Math.sin(Date.now()/100);
+      }
+      //update the UI every frame
+      window.requestAnimationFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||(function(callback,element){setTimeout(callback,1000/60);});
+      function frame(){
+        requestAnimationFrame(frame);
+        updateUI();
+      }
+      frame(); //start frame loop
+      //function to (re)initialize UI
+      function initUI(){
+        //drawMeter(I("dlMeter"),0,meterBk,dlColor,0);
+        //drawMeter(I("ulMeter"),0,meterBk,ulColor,0);
+        I("dlText").textContent="";
+        I("ulText").textContent="";
+        I("pingText").textContent="";
+        I("jitText").textContent="";
+        I("ip").textContent="";
+      }
+    </script>
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Speedtest</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div  id="startStopBtn"  onclick="startStop()"></div>
+
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script type="text/javascript">
+      $(document).ready(function(){
+      
+            $(".c-refrash-icon-new").click(function () {
+            if ($(this).hasClass('active')==true) 
+                {
+                   $(this).addClass("active-push");
+                   $(this).removeClass("active");
+                }
+            else 
+                {
+                  $(this).toggleClass("active")
+                }
+        });
+        $(".c-setting-wr a").click(function () {
+          $("body").addClass("modal-open");
+          setTimeout(function(){ $(".c-setting-modal").addClass("show"); },100);	
+        });
+        $(".c-setting-modal ").click(function () {
+           $("body").removeClass("modal-open");
+           $(".c-setting-modal").removeClass("show");	
+        });
+        $(".c-setting-modal .modal-content").click(function () {
+             event.stopPropagation();
+        });
+    
+        $(".c-setting-modal .close").click(function () {
+          $("body").removeClass("modal-open");
+           $(".c-setting-modal").removeClass("show");	
+        });	
+      });
+    </script> 
+    <script type="text/javascript">
+      
+    $('.toggleButton:eq(1)').on('click', function() { 
+      if($(this).html() === 'Play') 
+      {
+        $(this).html('Pause');
+        $boxTwo.addClass('horizTranslate');
+      } else {
+        $(this).html('Play');
+        var computedStyle = $boxTwo.css('margin-left');
+        $boxTwo.removeClass('horizTranslate');
+        $boxTwo.css('margin-left', computedStyle);
+      } 
+       
+    });
+    </script>
+    </body>
+    </html>
+    
